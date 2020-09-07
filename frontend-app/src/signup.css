@@ -1,0 +1,60 @@
+#navbar-style{
+border-bottom-style:  solid;
+}
+
+Form{
+text-align: left;
+}
+
+#heading-two{
+font-family:  'Arial Narrow Bold', sans-serif;
+font-weight:bold;
+color:rgb(39, 39, 146);
+}
+
+.form-link{
+color:rgb(39, 39, 146);
+font-weight:bold;
+}
+.form-input{
+border-top: none;
+border-left: none;
+border-right: none;
+border-radius: 0%;
+}
+.button{
+background-color: #3ac09e;
+color:rgb(39, 39, 146);
+border-radius: 5px;
+height: 40px;
+width:90%;
+}
+.button:hover{
+background-color: white;
+}
+.sell-button{
+background-color: #3ac09e;
+color:rgb(39, 39, 146);
+border-radius: 6px;
+height:fit-content;
+width:80px;
+}
+.sell-button:hover{
+background-color: white;
+}
+.open-market{
+width: 385px;
+height: 460px;
+
+}
+.container-fluid{
+margin-top: 50px;
+
+}
+.policy-terms{
+color: rgb(78, 78, 78);
+text-decoration-line: underline;
+}
+.forgot-password{
+text-align: right;
+}
