@@ -1,17 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import { Nav } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-
-
+import axios from "axios";
 import "../signup.css";
-
 function Signup() {
-     //const [state, setState] = useState(false);
-     let url = "/login";
+  //const [state, setState] = useState(false);
+  useEffect(() => {
+    axios
+      .post("http://openmarketauth.herokuapp.com/api/v1/auth/register", {
+        firstName: "string",
+        lastName: "string",
+        email: "user@example4.com",
+        password: "string_123",
+      })
+      .then(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  });
+  let url = "/login";
   return (
     <div>
-      <Navbar collapseOnSelect expand="lg" id="navbar-style" >
+      <Navbar collapseOnSelect expand="lg" id="navbar-style">
         <Navbar.Brand href="#home">
           <img
             src={require("../static/images/nav-log.png")}
@@ -23,9 +38,9 @@ function Signup() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto"></Nav>
           <Nav>
-            <Nav.Link href="#deets">HELP & CONTACT</Nav.Link>
-            <Nav.Link href="#deets">FAQ</Nav.Link>
-            <Nav.Link href="#deets">JOIN | SIGN IN</Nav.Link>
+            <Nav.Link href="#">HELP & CONTACT</Nav.Link>
+            <Nav.Link href="#">FAQ</Nav.Link>
+            <Nav.Link href="/login">SIGN IN</Nav.Link>
             <Nav.Link>
               <button type="submit" className="sell-button">
                 SELL
@@ -44,10 +59,9 @@ function Signup() {
                 className="open-market"
               />
             </p>
-          </div>
-
+          </div>{" "}
           <div className="col-md-5">
-            <Form>
+            <Form onSubmit={useEffect}>
               <h2 id="heading-two">Get Started</h2>
               <p>
                 Already have an account?{" "}
@@ -56,23 +70,50 @@ function Signup() {
                 </a>{" "}
               </p>
               <Form.Group controlId="formBasicEmail">
-                <Form.Label>Name</Form.Label>
-                <Form.Control type="text" className="form-input" />
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  className="form-input"
+                  name="firstName"
+                  required
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  className="form-input"
+                  name="lastName"
+                  required
+                />
               </Form.Group>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email </Form.Label>
-                <Form.Control type="email" className="form-input" />
-              </Form.Group>
-
+                <Form.Control
+                  type="email"
+                  className="form-input"
+                  name="email"
+                  required
+                />
+              </Form.Group>{" "}
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" className="form-input" />
+                <Form.Control
+                  type="password"
+                  className="form-input"
+                  name="password"
+                  required
+                />
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Comfirm Password</Form.Label>
-                <Form.Control type="password" className="form-input" />
-              </Form.Group>
-
+                <Form.Control
+                  type="password"
+                  className="form-input"
+                  name="password"
+                  required
+                />
+              </Form.Group>{" "}
               <button type="submit" className="button">
                 Create free account
               </button>
@@ -93,5 +134,4 @@ function Signup() {
     </div>
   );
 }
-
 export default Signup;
