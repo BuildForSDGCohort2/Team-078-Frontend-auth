@@ -7,8 +7,7 @@ import "../login.css";
 
 export default class LinkSuccessful extends Component {
   state = {
-    email: "",
-    
+    email: [""],
   };
 
   handleChange = (event) => {
@@ -29,6 +28,7 @@ export default class LinkSuccessful extends Component {
         },
         (error) => {
           console.log(error);
+          alert("failed");
         }
       );
   };
@@ -54,7 +54,7 @@ export default class LinkSuccessful extends Component {
             <Nav>
               <Nav.Link href="#">HELP & CONTACT</Nav.Link>
               <Nav.Link href="#">FAQ</Nav.Link>
-              
+
               {/* <Nav.Link>
                 <button type="submit" className="sell-button">
                   SELL
@@ -77,7 +77,9 @@ export default class LinkSuccessful extends Component {
 
             <div className="col-md-6">
               <Form onSubmit={this.handleChange}>
-                <h4 id="heading-two">Link was sent successfully Please check your email</h4>
+                <h4 id="heading-two">
+                  Link was sent successfully Please check your email
+                </h4>
                 <p>If you are yet to recieve the Link...</p>
                 <br></br>
 

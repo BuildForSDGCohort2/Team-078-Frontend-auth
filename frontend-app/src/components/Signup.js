@@ -7,12 +7,26 @@ import axios from "axios";
 
 import "../signup.css";
 
+const validEmailRegex = RegExp(
+  /^(([^<>()\\[\]\\.,;:\s@\\"]+(\.[^<>()\\[\]\\.,;:\s@\\"]+)*)|(\\".+\\"))@(([^<>()[\]\\.,;:\s@\\"]+\.)+[^<>()[\]\\.,;:\s@\\"]{2,})$/i
+);
+
+// const validPasswordRegex = RegExp( /^[A-Za-z]w{2,5}$/);
+
 export default class Signup extends Component {
   state = {
     firstName: "",
     lastName: "",
     email: "",
     password: "",
+    comfirmPassword: "",
+    errors: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      comfirmPassword: "",
+    },
   };
   //  const [state, setState] = useState(false);
   handleSubmit = (event) => {
@@ -22,6 +36,7 @@ export default class Signup extends Component {
       lastName: this.state.lastName,
       email: this.state.email,
       password: this.state.password,
+      comfirmPassword: this.state.comfirmPassword,
     };
     // console.log(myUserData);
     axios
@@ -42,19 +57,104 @@ export default class Signup extends Component {
   //   }, );
   firstNameChange = (event) => {
     this.setState({ firstName: event.target.value });
-  };
-  lastNameChange = (event) => {
-    this.setState({ lastName: event.target.value });
-  };
-  
-  emailChange = (event) => {
-    this.setState({ email: event.target.value });
-  };
-  passwordChange = (event) => {
-    this.setState({ password: event.target.value });
+    const { name, value } = event.target;
+    let errors = this.state.errors;
+    switch (name) {
+      case "firstName":
+        errors.firstName =
+          value.length < 3
+            ? "Name  should atleast be 3 characters and above and it is required!"
+            : "";
+        break;
+      default:
+        break;
+    }
+    this.setState({ errors, [name]: value }, () => {
+      // console.log(errors);
+      this.setState({ errors, [name]: value });
+    });
   };
 
+  lastNameChange = (event) => {
+    this.setState({ lastName: event.target.value });
+    const { name, value } = event.target;
+    let errors = this.state.errors;
+    switch (name) {
+      case "lastName":
+        errors.lastName =
+          value.length < 3
+            ? "Name  should atleast be 3 characters and above and it is required!"
+            : "";
+        break;
+      default:
+        break;
+    }
+    this.setState({ errors, [name]: value }, () => {
+      // console.log(errors);
+      this.setState({ errors, [name]: value });
+    });
+  };
+
+  emailChange = (event) => {
+    this.setState({ email: event.target.value });
+    const { name, value } = event.target;
+    let errors = this.state.errors;
+    switch (name) {
+      case "email":
+        errors.email = validEmailRegex.test(value)
+          ? ""
+          : "Email Should be of a proper email format and it is required!";
+        break;
+      default:
+        break;
+    }
+
+    this.setState({ errors, [name]: value }, () => {
+      // console.log(errors);
+      this.setState({ errors, [name]: value });
+    });
+  };
+  passwordChange = (event) => {
+    const { name, value } = event.target;
+    let errors = this.state.errors;
+    switch (name) {
+      case "password":
+        errors.password =
+          value.length < 8
+            ? "Password must be 6 characters long and contain numbers e.g 123 and it is required!"
+            : "";
+        break;
+      default:
+        break;
+    }
+    this.setState({ errors, [name]: value }, () => {
+      this.setState({ errors, [name]: value });
+    });
+    this.setState({ password: event.target.value });
+  };
+  // confirmPasswordChange = (event) => {
+  //   const { name, value } = event.target;
+  //   const message = "Failed";
+  //   let errors = this.state.errors;
+  //   switch (name) {
+  //     case "comfirmPassword":
+  //       //  errors.comfirmPassword =
+  //       if (event.handleConfirmPassword !== event.handlePasswordChange) {
+  //        console.log(message);
+  //       }
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   this.setState({ errors, [name]: value }, () => {
+  //     this.setState({ errors, [name]: value });
+  //   });
+  //   this.setState({ password: event.target.value });
+  // };
+
   render() {
+    const { errors } = this.state;
+
     let url = "/login";
     return (
       <div>
@@ -103,7 +203,7 @@ export default class Signup extends Component {
                   </a>{" "}
                 </p>
                 <Form.Group controlId="formBasicEmail">
-                  <Form.Label>First Name</Form.Label>
+                  <Form.Label>First Name </Form.Label>
                   <Form.Control
                     type="text"
                     className="form-input"
@@ -112,18 +212,41 @@ export default class Signup extends Component {
                     required
                     onChange={this.firstNameChange}
                   />
+                  {errors.firstName.length > 0 && (
+                    <span
+                      style={{
+                        color: "red",
+                        // marginLeft: "15px",
+                        fontSize: "0.75rem",
+                      }}
+                    >
+                      {errors.firstName}
+                    </span>
+                  )}
                 </Form.Group>
+
                 <Form.Group>
                   <Form.Label>Last Name</Form.Label>
                   <Form.Control
                     type="text"
                     className="form-input"
                     name="lastName"
-                    // value={this.state.lastName}
                     required
                     onChange={this.lastNameChange}
                   />
+                  {errors.lastName.length > 0 && (
+                    <span
+                      style={{
+                        color: "red",
+                        // marginLeft: "15px",
+                        fontSize: "0.75rem",
+                      }}
+                    >
+                      {errors.lastName}
+                    </span>
+                  )}
                 </Form.Group>
+
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Email </Form.Label>
                   <Form.Control
@@ -134,6 +257,17 @@ export default class Signup extends Component {
                     required
                     onChange={this.emailChange}
                   />
+                  {errors.email.length > 0 && (
+                    <span
+                      style={{
+                        color: "red",
+                        // marginLeft: "15px",
+                        fontSize: "0.75rem",
+                      }}
+                    >
+                      {errors.email}
+                    </span>
+                  )}
                 </Form.Group>
 
                 <Form.Group controlId="formBasicPassword">
@@ -146,18 +280,41 @@ export default class Signup extends Component {
                     required
                     onChange={this.passwordChange}
                   />
+                  {errors.password.length > 0 && (
+                    <span
+                      style={{
+                        color: "red",
+                        // marginLeft: "15px",
+                        fontSize: "0.75rem",
+                      }}
+                    >
+                      {errors.password}
+                    </span>
+                  )}
                 </Form.Group>
-                <Form.Group controlId="formBasicPassword">
+
+                {/* <Form.Group controlId="formBasicPassword">
                   <Form.Label>Comfirm Password</Form.Label>
                   <Form.Control
                     type="password"
                     className="form-input"
-                    name="password"
+                    name="comfirmPassword"
                     // value={this.state.password}
                     // required
-                    onChange={this.passwordChange}
+                    onChange={this.confirmPasswordChange}
                   />
-                </Form.Group>
+                  {/* {errors.comfirmPassword.length > 6 && (
+                    <span
+                      style={{
+                        color: "red",
+                        // marginLeft: "15px",
+                        fontSize: "0.75rem",
+                      }}
+                    >
+                      {errors.comfirmPassword}
+                    </span>
+                  )} */}
+                {/* </Form.Group> */}
 
                 <button type="submit" className="button">
                   Create free account
