@@ -8,14 +8,12 @@ import "../login.css";
 export default class PasswordReset extends Component {
   state = {
     email: "",
-    
   };
 
   handleChange = (event) => {
     event.preventDefault();
     const password = {
       email: this.state.email,
-      
     };
     axios
       .post(
@@ -25,9 +23,7 @@ export default class PasswordReset extends Component {
       .then(
         (response) => {
           console.log(response);
-              window.location = "/succussfullysent";
-              
-              
+          window.location = "/succussfullysent";
         },
         (error) => {
           console.log(error);
@@ -37,7 +33,6 @@ export default class PasswordReset extends Component {
   emailChange = (event) => {
     this.setState({ email: event.target.value });
   };
- 
 
   render() {
     let url = "/";
@@ -94,7 +89,9 @@ export default class PasswordReset extends Component {
                   />
                 </Form.Group>
 
-                <button type="submit" className="button">Get Link</button>
+                <button type="submit" className="button">
+                  Get Link
+                </button>
               </Form>
             </div>
           </div>
