@@ -5,24 +5,27 @@ import Form from "react-bootstrap/Form";
 import axios from "axios";
 import "../login.css";
 
-export default class Login extends Component {
+export default class LinkSuccessful extends Component {
   state = {
     email: "",
-    password: "",
+    
   };
 
   handleChange = (event) => {
     event.preventDefault();
-    const user = {
+    const resend = {
       email: this.state.email,
-      password: this.state.password,
     };
     axios
-      .post("https://openmarketauth.herokuapp.com/api/v1/auth/login", user)
+      .get(
+        "https://openmarketauth.herokuapp.com/api/v1/auth/verification/resend",
+        resend
+      )
       .then(
         (response) => {
           console.log(response);
-          window.location = "/";
+          //   window.location = "/";
+          alert("submited");
         },
         (error) => {
           console.log(error);
@@ -31,9 +34,6 @@ export default class Login extends Component {
   };
   emailChange = (event) => {
     this.setState({ email: event.target.value });
-  };
-  passwordChange = (event) => {
-    this.setState({ password: event.target.value });
   };
 
   render() {
@@ -54,36 +54,32 @@ export default class Login extends Component {
             <Nav>
               <Nav.Link href="#">HELP & CONTACT</Nav.Link>
               <Nav.Link href="#">FAQ</Nav.Link>
-              <Nav.Link href="/">JOIN</Nav.Link>
-              <Nav.Link>
+              
+              {/* <Nav.Link>
                 <button type="submit" className="sell-button">
                   SELL
                 </button>
-              </Nav.Link>
+              </Nav.Link> */}
             </Nav>
           </Navbar.Collapse>
         </Navbar>
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-5">
               <p>
                 <img
-                  src={require("../static/images/login.png")}
+                  src={require("../static/images/succes-icon.png")}
                   alt=""
-                  className="open-market-login"
+                  className="open-market-sent"
                 />
               </p>
             </div>
 
-            <div className="col-md-5">
+            <div className="col-md-6">
               <Form onSubmit={this.handleChange}>
-                <h2 id="heading-two">Welcome Back</h2>
-                <p>
-                  Don't have an account?{" "}
-                  <a href={url} className="form-link">
-                    create an account
-                  </a>{" "}
-                </p>
+                <h4 id="heading-two">Link was sent successfully Please check your email</h4>
+                <p>If you are yet to recieve the Link...</p>
+                <br></br>
 
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Email </Form.Label>
@@ -94,49 +90,14 @@ export default class Login extends Component {
                     onChange={this.emailChange}
                     required={true}
                   />
-                  {/* <small
-                  style={{
-                    color: "red",
-                    marginLeft: "15px",
-                    fontSize: "0.75rem",
-                  }}
-                >
-                  {emaile}
-                </small> */}
                 </Form.Group>
-
-                <Form.Group controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    className="form-input"
-                    name="password"
-                    autoComplete="current-password"
-                    onChange={this.passwordChange}
-                    required={true}
-                  />
-
-                  {/* <small
-                  style={{
-                    color: "red",
-                    marginLeft: "15px",
-                    fontSize: "0.75rem",
-                  }}
-                >
-                  {passworde}
-                </small> */}
-                </Form.Group>
-                <p className="forgot-password">
-                  {" "}
-                  <a href="/passwordreset">Forgot Password?</a>{" "}
-                </p>
-
                 <button type="submit" className="button">
-                  Sigin in
+                  Resend link
                 </button>
               </Form>
             </div>
           </div>
+          <div className="md-col-1"></div>
         </div>
       </div>
     );

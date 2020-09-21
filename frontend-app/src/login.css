@@ -1,7 +1,9 @@
 #navbar-style{
 border-bottom-style:  solid;
 }
-
+.d-inline-block {
+height: 60px;
+}
 Form{
 text-align: left;
 margin-top: 20px;
@@ -59,4 +61,7 @@ text-decoration-line: underline;
 }
 .forgot-password{
 text-align: right;
+}
+.open-market-sent{
+width: 55%;
 }
